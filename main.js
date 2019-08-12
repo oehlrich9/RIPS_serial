@@ -1,11 +1,13 @@
 
 const fs = require('fs');
-const RadioServer = require('./RadioServer');
+const SerialServer = require('./SerialServer');
+const SocketProvider = require('./SocketProvider');
 
 var config = JSON.parse(fs.readFileSync('config.json'));
 console.log(config.radios.length);
-var radioServer = [];
+var serialServers = [];
+var sockerProvider = new SockerProvider();
 
 config.radios.forEach(function(radio, id) {
-    radioServer.push(new RadioServer(radio));
+    serialServers.push(new SerialServer(radio, sockerProvider));
 });
