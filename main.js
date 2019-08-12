@@ -2,7 +2,7 @@ console.log("Test");
 
 var PORT = 10800;
 var HOST = '226.0.0.11';
-var MYIP = '192.168.177.104';
+var MYIP = '192.168.177.104oe';
 var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 var id = 0;
