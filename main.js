@@ -64,8 +64,10 @@ function handleMessage(data, remote) {
         return;
     }
     console.log("getting Message from: "+remote.address);
-    serialBuffer = Buffer.concat([serialBuffer, data]);
-    getMessages();
+    sendMessageToSerial(data);
+    /*serialBuffer = Buffer.concat([serialBuffer, data]);
+    getMessages();*/
+
 }
 
 
