@@ -70,11 +70,11 @@ function ProcessMessage(line) {
 
 function sendMessageToSerial(line) {
     console.log("Writing from UDP to Serial: "+line);
-    port.write(line, PORT, HOST);
+    port.write(line);
 }
 
 function sendSerialData(line) {
     console.log("Writing from Serial to UDP:"+line);
 
-    client.send(line);
+    client.send(line, PORT, HOST);
 }
