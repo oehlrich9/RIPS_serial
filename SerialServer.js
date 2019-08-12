@@ -5,7 +5,7 @@ class RadioServer {
     constructor(radioConfig) {
 		var self = this;
         this.radioConfig = radioConfig;
-		this.openSocket();
+		this.registerSocket();
 		this.openSerialPort();
     }
 
