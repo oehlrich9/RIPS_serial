@@ -4,10 +4,10 @@ class RadioServer {
     
     constructor(radioConfigs) {
 		var self = this;
-        this.radioConfigs = radioConfigs;
+        this.radioConfigs = radioConfigs.radios;
         this.sockets= [];
 		this.openSockets();
-        this.openSerialPort();
+        //this.openSerialPort();
         
     }
 
@@ -34,13 +34,13 @@ class RadioServer {
     
     
             client.on('listening', function (item) {
-                var address = self.client.address();
+                var address = client.address();
                 console.log('UDP Client listening on ' + address.address + ":" + address.port);
-                self.client.setBroadcast(true);
-                self.client.setMulticastTTL(128);
-                this.radioConfigs.forEach(function(item2){
+                client.setBroadcast(true);
+                client.setMulticastTTL(128);
+                self.radioConfigs.forEach(function(item2){
                     if(item2.port_multicast == item){
-                        self.client.addMembership(item2.ip_multicast);
+                        client.addMembership(item2.ip_multicast);
                     }
                 });
                 
@@ -49,7 +49,7 @@ class RadioServer {
                 self.handleMessage(data, remote);
             });
 
-            this.sockets.push(client);
+            self.sockets.push(client);
         });
     }
 
