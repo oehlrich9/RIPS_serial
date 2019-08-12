@@ -2,7 +2,7 @@
 class RadioServer {
 
     
-    constructor(radioConfig) {
+    constructor(radioConfig, socketProvider) {
 		var self = this;
         this.radioConfig = radioConfig;
 		this.registerSocket();
@@ -10,7 +10,7 @@ class RadioServer {
     }
 
 
-    openSocket() {
+    registerSocket() {
 		var self = this;
         var dgram = require('dgram');
 
