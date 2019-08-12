@@ -12,7 +12,7 @@ class RadioServer {
 
 
     registerSocket() {
-		self.socketProvider.registerSocket(this.radioConfig, this.handleMessage);
+		this.socketProvider.registerSocket(this.radioConfig, this.handleMessage);
     }
 
     handleMessage(data, remote) {
@@ -26,7 +26,7 @@ class RadioServer {
     }
     
     sendMessageToUDP(line) {
-        self.socketProvider.sendMessageToUDP(line, this.radioConfig.port_inbound, this.radioConfig.ip_host);
+        this.socketProvider.sendMessageToUDP(line, this.radioConfig.port_inbound, this.radioConfig.ip_host);
     }
 
 
