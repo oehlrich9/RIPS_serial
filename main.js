@@ -1,6 +1,7 @@
 console.log("Test");
 
 var PORT = 10800;
+var PORT_OUT = 10801;
 var HOST = '226.0.0.12';
 var MYIP = '192.168.177.104';
 var dgram = require('dgram');
@@ -80,5 +81,5 @@ function sendMessageToSerial(line) {
 function sendSerialData(line) {
     console.log("Writing from Serial to UDP:"+line);
 
-    client.send(line, PORT, HOST);
+    client.send(line, PORT_OUT, HOST);
 }
