@@ -48,7 +48,10 @@ client.on('message', function (data, remote) {
 });
 
 function handleMessage(data, remote) {
-    console.log("Received Message from:"+remote.address);
+    if(remote.address == MYIP) {
+        console.log("Ignoring message from myself");
+        return;
+    }
     serialBuffer = Buffer.concat([serialBuffer, data]);
     getMessages();
 }
