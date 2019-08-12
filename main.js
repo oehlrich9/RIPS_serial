@@ -40,7 +40,7 @@ client.on('listening', function () {
     console.log('UDP Client listening on ' + address.address + ":" + address.port);
     client.setBroadcast(true);
     client.setMulticastTTL(128); 
-    client.addMembership('226.0.0.11');
+    client.addMembership(HOST);
 });
 
 client.on('message', function (data, remote) {   
@@ -70,7 +70,7 @@ function ProcessMessage(line) {
 
 function sendMessageToSerial(line) {
     console.log("Writing from UDP to Serial: "+line);
-    port.write(line);
+    port.write(line, PORT, HOST);
 }
 
 function sendSerialData(line) {
