@@ -2,13 +2,17 @@ console.log("Test");
 
 var PORT = 10800;
 var HOST = '226.0.0.11';
+var MYIP = '192.168.177.104';
 var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 var id = 0;
+var ignoreNextMessage
 
 
 var SerialPort = require('serialport');
+//var port = new SerialPort('/dev/pts/2');
 var port = new SerialPort('COM1');
+
 
 // Open errors will be emitted as an error event
 port.on('error', function(err) {
@@ -25,20 +29,29 @@ var lastHeaderMessage = null;
 
 var serialBuffer = Buffer.alloc(0);
 
+client.bind({
+    address: MYIP,
+    port: PORT,
+    exclusive: false
+  }); 
 
 client.on('listening', function () {
     var address = client.address();
     console.log('UDP Client listening on ' + address.address + ":" + address.port);
-    client.setBroadcast(true)
+    client.setBroadcast(true);
     client.setMulticastTTL(128); 
     client.addMembership('226.0.0.11');
 });
 
 client.on('message', function (data, remote) {   
-    //console.log('A: Epic Command Received. Preparing Relay.');
+    handleMessage(data, remote);
+});
+
+function handleMessage(data, remote) {
+    console.log("Received Message from:"+remote.address);
     serialBuffer = Buffer.concat([serialBuffer, data]);
     getMessages();
-});
+}
 
 
 
@@ -62,7 +75,6 @@ function sendMessageToSerial(line) {
 
 function sendSerialData(line) {
     console.log("Writing from Serial to UDP:"+line);
-    client.send(line,PORT, HOST);
-}
 
-client.bind(PORT);
+    client.send(line);
+}
