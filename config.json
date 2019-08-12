@@ -12,7 +12,7 @@
             "ip_host": "192.168.0.12",
             "port_multicast": "10800",
             "port_inbound": "10801",
-            "port_local": "COM8"
+            "port_local": "COM6"
         }
         ,
         {
