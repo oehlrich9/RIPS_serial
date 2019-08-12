@@ -15,17 +15,20 @@ class SocketProvider {
             }
         });
         if(socketFound) {
+            this.sockets[socketIndex].addMembership(radioConfig.ip_multicast);
             this.sockets[socketIndex].callbackfunc[radioConfig.ip_host] = callbackfunc;
         }
         else {
             var dgram = require('dgram');
+            socket.setBroadcast(true);
+            socket.setMulticastTTL(128); 
+            socket.addMembership(radioConfig.ip_multicast);
             var socket =  dgram.createSocket('udp4')
             socket.bind({
                 port: radioConfig.port_multicast,
                 exclusive: false
             });
-            socket.setBroadcast(true);
-            socket.setMulticastTTL(128); 
+            
             socket.callbackfunctions = {};
             socket.on('message', function (data, remote) {  
                 if(callbackfunctions[remote.address] != undefined) {
