@@ -52,6 +52,7 @@ function handleMessage(data, remote) {
         console.log("Ignoring message from myself");
         return;
     }
+    console.log("getting Message from: "+remote.address);
     serialBuffer = Buffer.concat([serialBuffer, data]);
     getMessages();
 }
