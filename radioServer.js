@@ -2,49 +2,52 @@
 class RadioServer {
 
     
-
     constructor(radioConfig) {
+		var self = this;
         this.radioConfig = radioConfig;
+		this.openSocket();
+		this.openSerialPort();
     }
 
 
     openSocket() {
+		var self = this;
         var dgram = require('dgram');
 
-        this.client = dgram.createSocket('udp4');
-        client.bind({
-            port: this.radioConfig.port_multicast,
+        self.client = dgram.createSocket('udp4');
+        self.client.bind({
+            port: self.radioConfig.port_multicast,
             exclusive: false
         });
 
 
-        client.on('listening', function () {
-            var address = client.address();
+        self.client.on('listening', function (item) {
+            var address = self.client.address();
             console.log('UDP Client listening on ' + address.address + ":" + address.port);
-            client.setBroadcast(true);
-            client.setMulticastTTL(128); 
-            client.addMembership(HOST);
+            self.client.setBroadcast(true);
+            self.client.setMulticastTTL(128); 
+            self.client.addMembership(self.radioConfig.ip_multicast);
         });
 
-        client.on('message', function (data, remote) {   
+        self.client.on('message', function (data, remote) {   
             console.log(Buffer.from(data, 'utf8').toString('hex'));
-            this.handleMessage(data, remote);
+            self.handleMessage(data, remote);
         });
     }
 
     openSerialPort() {
-
+		var self = this;
         var SerialPort = require('serialport');
 
 
-        this.port = new SerialPort(this.radioConfig.port_local);
+        self.port = new SerialPort(self.radioConfig.port_local);
 
-        port.on('error', function(err) {
+        self.port.on('error', function(err) {
             console.log('Error: ', err.message);
         });
         
-        port.on('data', function (data) {
-            sendMessageToUDP(data);
+        self.port.on('data', function (data) {
+            self.sendMessageToUDP(data);
         });
 
     }
@@ -61,7 +64,7 @@ class RadioServer {
     
     sendMessageToUDP(line) {
         console.log("Writing from Serial to UDP:"+line);
-        client.send(line, this.radioConfig.port_inbound, this.radioConfig.ip_host);
+        this.client.send(line, this.radioConfig.port_inbound, this.radioConfig.ip_host);
     }
 
 
