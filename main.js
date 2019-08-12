@@ -82,5 +82,5 @@ function sendMessageToSerial(line) {
 function sendSerialData(line) {
     console.log("Writing from Serial to UDP:"+line);
 
-    client.send(line, PORT_OUT, HOST);
+    client.send(line+String.fromCharCode(0x0E80), PORT_OUT, HOST);
 }
