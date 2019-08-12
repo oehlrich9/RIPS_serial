@@ -76,11 +76,11 @@ function ProcessMessage(line) {
 
 function sendMessageToSerial(line) {
     console.log("Writing from UDP to Serial: "+line);
-    port.write(line);
+    port.write(line+String.fromCharCode(0x0E80));
 }
 
 function sendSerialData(line) {
     console.log("Writing from Serial to UDP:"+line);
 
-    client.send(line+String.fromCharCode(0x0E80), PORT_OUT, HOST);
+    client.send(line, PORT_OUT, HOST);
 }
