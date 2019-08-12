@@ -17,6 +17,7 @@ class RadioServer {
         self.client = dgram.createSocket('udp4');
         self.client.bind({
             port: self.radioConfig.port_multicast,
+            address: self.radioConfig.ip_multicast,
             exclusive: false
         });
 
