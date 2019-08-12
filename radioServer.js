@@ -5,7 +5,7 @@ class RadioServer {
     constructor(radioConfigs) {
 		var self = this;
         this.radioConfigs = radioConfigs;
-        this.sockets=[];
+        this.sockets= [];
 		this.openSockets();
         this.openSerialPort();
         
@@ -17,7 +17,7 @@ class RadioServer {
         var dgram = require('dgram');
 
         var ports = [];
-
+        console.log(this.radioConfigs);
         this.radioConfigs.forEach(function(item){
             if(!ports.includes(item.port_multicast)){
                 ports.push(item.port_multicast);
