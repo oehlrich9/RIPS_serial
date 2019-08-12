@@ -22,9 +22,12 @@ class SocketProvider {
             var dgram = require('dgram');
             
             var socket =  dgram.createSocket('udp4');
-            socket.setBroadcast(true);
-            socket.setMulticastTTL(128); 
-            socket.addMembership(radioConfig.ip_multicast);
+            socket.on('listening', function(){
+                socket.setBroadcast(true);
+                socket.setMulticastTTL(128); 
+                socket.addMembership(radioConfig.ip_multicast);
+            });
+            
             socket.bind({
                 port: radioConfig.port_multicast,
                 exclusive: false
