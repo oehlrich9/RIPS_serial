@@ -6,16 +6,18 @@ var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 var id = 0;
 
+
 var SerialPort = require('serialport');
-var Readline = require('@serialport/parser-readline');
 var port = new SerialPort('COM1');
 
-var parser = new Readline();
-port.pipe(parser);
+// Open errors will be emitted as an error event
+port.on('error', function(err) {
+  console.log('Error: ', err.message);
+});
 
-parser.on('data', sendSerialData);
-
-
+port.on('data', function (data) {
+    sendSerialData(data);
+});
 
 
 var lastHeaderType = null;
@@ -60,7 +62,7 @@ function sendMessageToSerial(line) {
 
 function sendSerialData(line) {
     console.log("Writing from Serial to UDP:"+line);
-    client.send(line);
+    client.send(line,PORT, HOST);
 }
 
 client.bind(PORT);
