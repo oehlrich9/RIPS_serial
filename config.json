@@ -20,7 +20,7 @@
             "ip_host": "192.168.0.13",
             "port_multicast": "10800",
             "port_inbound": "10801",
-            "port_local": "COM10"
+            "port_local": "COM8"
         }
     ]
 }
