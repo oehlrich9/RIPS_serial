@@ -20,10 +20,11 @@ class SocketProvider {
         }
         else {
             var dgram = require('dgram');
+            
+            var socket =  dgram.createSocket('udp4');
             socket.setBroadcast(true);
             socket.setMulticastTTL(128); 
             socket.addMembership(radioConfig.ip_multicast);
-            var socket =  dgram.createSocket('udp4')
             socket.bind({
                 port: radioConfig.port_multicast,
                 exclusive: false
