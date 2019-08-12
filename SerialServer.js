@@ -10,6 +10,23 @@ class RadioServer {
 		this.openSerialPort();
     }
 
+    openSerialPort() {
+		var self = this;
+        var SerialPort = require('serialport');
+
+
+        self.port = new SerialPort(self.radioConfig.port_local);
+
+        self.port.on('error', function(err) {
+            console.log('Error: ', err.message);
+        });
+        
+        self.port.on('data', function (data) {
+            self.sendMessageToUDP(data);
+        });
+
+    }
+
 
     registerSocket() {
 		this.socketProvider.registerSocket(this.radioConfig, this.handleMessage);
