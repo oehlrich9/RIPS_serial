@@ -35,7 +35,7 @@ class SocketProvider {
             });
             
             socket.on('message', self.selectCallback);
-            this.callbackfunc[radioConfig.ip_host] = callbackfunc;
+            this.callbackfunctions[radioConfig.ip_host] = callbackfunc;
             this.sockets.push(this.socket);
         }
     }
