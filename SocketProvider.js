@@ -1,6 +1,7 @@
 class SocketProvider {
     constructor() {
         this.sockets = [];
+        this.callbackfunctions = {};
     }
 
     registerSocket(radioConfig, callbackfunc) {
@@ -16,7 +17,7 @@ class SocketProvider {
         });
         if(socketFound) {
             this.sockets[socketIndex].addMembership(radioConfig.ip_multicast);
-            this.sockets[socketIndex].callbackfunc[radioConfig.ip_host] = callbackfunc;
+            this.callbackfunc[radioConfig.ip_host] = callbackfunc;
         }
         else {
             var dgram = require('dgram');
@@ -33,15 +34,17 @@ class SocketProvider {
                 exclusive: false
             });
             
-            socket.callbackfunctions = {};
-            socket.on('message', function (data, remote) {  
-                if(callbackfunctions[remote.address] != undefined) {
-                    callbackfunctions[remote.address](data, remote);
-                } 
-            });
-            socket.callbackfunc[radioConfig.ip_host] = callbackfunc;
+            socket.callbackfunctions = new Object();
+            socket.on('message', selectCallback);
+            this.callbackfunc[radioConfig.ip_host] = callbackfunc;
             this.sockets.push(this.socket);
         }
+    }
+
+    selectCallback(data, remote) {
+        if(this.callbackfunctions[remote.address] != undefined) {
+            this.callbackfunctions[remote.address](data, remote);
+        } 
     }
 
     sendMessage(msg, port, ip) {
