@@ -1,0 +1,26 @@
+{
+    "radios": [
+        {
+            "ip_multicast": "226.0.0.11",
+            "ip_host": "192.168.0.11",
+            "port_multicast": "10800",
+            "port_inbound": "10801",
+            "port_local": "COM1"
+        },
+        {
+            "ip_multicast": "226.0.0.12",
+            "ip_host": "192.168.0.12",
+            "port_multicast": "10800",
+            "port_inbound": "10801",
+            "port_local": "COM8"
+        }
+        ,
+        {
+            "ip_multicast": "226.0.0.13",
+            "ip_host": "192.168.0.13",
+            "port_multicast": "10800",
+            "port_inbound": "10801",
+            "port_local": "COM10"
+        }
+    ]
+}
