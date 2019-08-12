@@ -1,0 +1,15 @@
+{
+  "name": "els_serial",
+  "version": "1.0.0",
+  "description": "Tool to reditect RIPS serial trafic from UDP to serial and the other way round",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^7.1.5"
+  }
+}
