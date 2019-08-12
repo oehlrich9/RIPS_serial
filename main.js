@@ -80,7 +80,7 @@ function getMessages(sdsMessage) {
 }
 
 function ProcessMessage(line) {
-    sendMessageToSerial(line);
+    sendMessageToSerial(line+'\r\n');
 }
 
 function sendMessageToSerial(line) {
