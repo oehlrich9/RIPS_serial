@@ -7,17 +7,6 @@ var MYIP = '192.168.177.104';
 var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 
-// Open errors will be emitted as an error event
-port2.on('error', function(err) {
-    console.log('Error: ', err.message);
-  });
-  
-port2.on('data', function (data) {
-      console.log(data);
-  });
-
-var lastHeaderType = null;
-var lastHeaderMessage = null;
 
 var serialBuffer = Buffer.alloc(0);
 
