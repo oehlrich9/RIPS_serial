@@ -13,6 +13,7 @@ var ignoreNextMessage
 var SerialPort = require('serialport');
 //var port = new SerialPort('/dev/pts/2');
 var port = new SerialPort('COM1');
+var port2 = new SerialPort('COM3');
 
 
 // Open errors will be emitted as an error event
@@ -24,6 +25,14 @@ port.on('data', function (data) {
     sendSerialData(data);
 });
 
+// Open errors will be emitted as an error event
+port2.on('error', function(err) {
+    console.log('Error: ', err.message);
+  });
+  
+port2.on('data', function (data) {
+      console.log(data);
+  });
 
 var lastHeaderType = null;
 var lastHeaderMessage = null;
