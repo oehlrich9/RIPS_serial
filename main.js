@@ -45,6 +45,7 @@ client.on('listening', function () {
 });
 
 client.on('message', function (data, remote) {   
+    Buffer.from(data, 'utf8').toString('hex');
     handleMessage(data, remote);
 });
 
