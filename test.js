@@ -23,6 +23,7 @@ client.on('listening', function () {
     client.addMembership(HOST);
     client.addMembership('226.0.0.12');
     client.addMembership('226.0.0.13');
+	console.log(client);
 });
 
 client.on('message', function (data, remote) {   
