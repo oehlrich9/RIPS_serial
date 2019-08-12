@@ -2,22 +2,26 @@ class SocketProvider {
     constructor() {
         this.sockets = [];
         this.callbackfunctions = {};
+		this.ports = [];
     }
 
     registerSocket(radioConfig, callbackfunc) {
         var self = this;
         var socketFound = false;
         var socketIndex = -1;
-        this.sockets.forEach(function(item, index) {
-            if(radioConfig.port_multicast == item.address().port) {
+		console.log(this.sockets);
+		for(let index = 0; index < this.ports.length; index++){
+			var item = this.ports[index];
+			console.log(item);
+            if(radioConfig.port_multicast == item) {
                 socketFound = true;
                 socketIndex = index;
-                throw BreakException;
+                break;
             }
-        });
+		}
         if(socketFound) {
             this.sockets[socketIndex].addMembership(radioConfig.ip_multicast);
-            this.callbackfunc[radioConfig.ip_host] = callbackfunc;
+            this.callbackfunctions[radioConfig.ip_host] = callbackfunc;
         }
         else {
             var dgram = require('dgram');
@@ -33,14 +37,20 @@ class SocketProvider {
                 port: radioConfig.port_multicast,
                 exclusive: false
             });
-            
-            socket.on('message', self.selectCallback);
+            this.ports.push(radioConfig.port_multicast);
+            socket.on('message', function (data, remote) {
+				console.log("Message received"+data);
+				if(this.callbackfunctions[remote.address] != undefined) {
+					this.callbackfunctions[remote.address](data, remote);
+				} 
+			});
             this.callbackfunctions[radioConfig.ip_host] = callbackfunc;
-            this.sockets.push(this.socket);
+            this.sockets.push(socket);
         }
     }
 
     selectCallback(data, remote) {
+		console.log("Message received"+data);
         if(this.callbackfunctions[remote.address] != undefined) {
             this.callbackfunctions[remote.address](data, remote);
         } 
